@@ -13,6 +13,15 @@
 		CEBA45652C04CFED00C95299 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEBA45642C04CFED00C95299 /* Base */; };
 		CEBA45672C04CFEE00C95299 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEBA45662C04CFEE00C95299 /* Assets.xcassets */; };
 		CEBA456A2C04CFEE00C95299 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEBA45692C04CFEE00C95299 /* Base */; };
+		CEBA45742C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */; };
+		CEBA45762C08856500C95299 /* 3konngetu_no_tenkiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */; };
+		CEBA45782C08857900C95299 /* 4settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45772C08857900C95299 /* 4settingsViewController.swift */; };
+		CEBA457A2C0886C300C95299 /* 1WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */; };
+		CEBA457C2C088B7900C95299 /* 1WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA457B2C088B7900C95299 /* 1WeatherView.swift */; };
+		CEBA45812C08918700C95299 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBA45802C08918700C95299 /* CoreLocation.framework */; };
+		CEBA45A32C09D78900C95299 /* 3MonthDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */; };
+		CEBA45A72C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */; };
+		CEBA45AD2C09E04300C95299 /* 3extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45AC2C09E04300C95299 /* 3extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +33,16 @@
 		CEBA45662C04CFEE00C95299 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEBA45692C04CFEE00C95299 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEBA456B2C04CFEE00C95299 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 2kyou_no_tenkiTableViewController.swift; sourceTree = "<group>"; };
+		CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3konngetu_no_tenkiViewController.swift; sourceTree = "<group>"; };
+		CEBA45772C08857900C95299 /* 4settingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 4settingsViewController.swift; sourceTree = "<group>"; };
+		CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 1WeatherViewController.swift; sourceTree = "<group>"; };
+		CEBA457B2C088B7900C95299 /* 1WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 1WeatherView.swift; sourceTree = "<group>"; };
+		CEBA45802C08918700C95299 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3MonthDateManager.swift; sourceTree = "<group>"; };
+		CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3CalendarCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		CEBA45AC2C09E04300C95299 /* 3extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3extention.swift; sourceTree = "<group>"; };
+		CEBA45AE2C09FB2900C95299 /* wheather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wheather.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBA45812C08918700C95299 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +62,7 @@
 			children = (
 				CEBA455C2C04CFED00C95299 /* wheather */,
 				CEBA455B2C04CFED00C95299 /* Products */,
+				CEBA457F2C08918700C95299 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +77,7 @@
 		CEBA455C2C04CFED00C95299 /* wheather */ = {
 			isa = PBXGroup;
 			children = (
+				CEBA45AE2C09FB2900C95299 /* wheather.entitlements */,
 				CEBA455D2C04CFED00C95299 /* AppDelegate.swift */,
 				CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */,
 				CEBA45612C04CFED00C95299 /* ViewController.swift */,
@@ -63,8 +85,24 @@
 				CEBA45662C04CFEE00C95299 /* Assets.xcassets */,
 				CEBA45682C04CFEE00C95299 /* LaunchScreen.storyboard */,
 				CEBA456B2C04CFEE00C95299 /* Info.plist */,
+				CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */,
+				CEBA45772C08857900C95299 /* 4settingsViewController.swift */,
+				CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */,
+				CEBA457B2C088B7900C95299 /* 1WeatherView.swift */,
+				CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */,
+				CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */,
+				CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */,
+				CEBA45AC2C09E04300C95299 /* 3extention.swift */,
 			);
 			path = wheather;
+			sourceTree = "<group>";
+		};
+		CEBA457F2C08918700C95299 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEBA45802C08918700C95299 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +177,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBA45622C04CFED00C95299 /* ViewController.swift in Sources */,
+				CEBA45742C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift in Sources */,
 				CEBA455E2C04CFED00C95299 /* AppDelegate.swift in Sources */,
+				CEBA45762C08856500C95299 /* 3konngetu_no_tenkiViewController.swift in Sources */,
 				CEBA45602C04CFED00C95299 /* SceneDelegate.swift in Sources */,
+				CEBA457A2C0886C300C95299 /* 1WeatherViewController.swift in Sources */,
+				CEBA45A72C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift in Sources */,
+				CEBA45AD2C09E04300C95299 /* 3extention.swift in Sources */,
+				CEBA45782C08857900C95299 /* 4settingsViewController.swift in Sources */,
+				CEBA45A32C09D78900C95299 /* 3MonthDateManager.swift in Sources */,
+				CEBA457C2C088B7900C95299 /* 1WeatherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,10 +336,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = wheather/wheather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP6MC7F82A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wheather/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "天気予報の取得のために位置情報が必要になります";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -304,7 +353,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.Tsuge.Perry.wheather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Perry.Tsuge.wheather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -317,10 +366,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = wheather/wheather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP6MC7F82A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wheather/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "天気予報の取得のために位置情報が必要になります";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -331,7 +383,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.Tsuge.Perry.wheather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Perry.Tsuge.wheather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
