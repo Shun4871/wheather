@@ -80,7 +80,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="AKC-dF-q3O"/>
                         <segue destination="sbr-uP-k4J" kind="relationship" relationship="viewControllers" id="YlR-Ew-FUR"/>
                         <segue destination="LzC-6z-unL" kind="relationship" relationship="viewControllers" id="rpD-Pg-HXU"/>
-                        <segue destination="9tJ-LI-lHf" kind="relationship" relationship="viewControllers" id="Z7h-eN-7Qf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAd-Xc-YDS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -102,22 +101,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="acX-fD-N29" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="203.81679389312976" y="679.57746478873241"/>
-        </scene>
-        <!--設定-->
-        <scene sceneID="aOr-Q5-9iX">
-            <objects>
-                <viewController id="9tJ-LI-lHf" customClass="SettingsViewController" customModule="wheather" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5wi-rw-Ye9">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="avS-t6-src"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="設定" image="setting.png" id="MDo-5b-pyr"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="k9m-KN-4sA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1137" y="713"/>
         </scene>
         <!--今日の天気-->
         <scene sceneID="3vx-tp-WZ5">
@@ -152,7 +135,6 @@
     <resources>
         <image name="calender.png" width="32" height="32"/>
         <image name="reload.png" width="32" height="32"/>
-        <image name="setting.png" width="32" height="32"/>
         <image name="umbrella.png" width="32" height="32"/>
         <image name="weather.png" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
