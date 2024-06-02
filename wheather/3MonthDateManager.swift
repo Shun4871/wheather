@@ -1,15 +1,8 @@
-//
-//  CalenderView.swift
-//  wheather
-//
-//  Created by 柘植俊之介 on 2024/05/31.
-//
-
-
 import Foundation
 
 final class MonthDateManager {
-
+    private var reservations: [Date: Bool] = [:]
+    private var reservationTimes: [Date: String] = [:] // 予約時間を管理するプロパティ
     private let calendar = Calendar.current
     private (set) var days: [Date] = []
     private var firstDate: Date! {
@@ -51,5 +44,29 @@ final class MonthDateManager {
     func prevMonth() {
         firstDate = calendar.date(byAdding: .month, value: -1, to: firstDate)
     }
-}
 
+    func toggleReservation(for date: Date) {
+        reservations[date] = !(reservations[date] ?? false)
+    }
+
+    func isReserved(for date: Date) -> Bool {
+        return reservations[date] ?? false
+    }
+
+    func setReservationTime(for date: Date, time: String) {
+        reservationTimes[date] = time
+    }
+
+    func getReservationTime(for date: Date) -> String? {
+        return reservationTimes[date]
+    }
+
+    func indexPath(for date: Date) -> IndexPath? {
+        guard let index = days.firstIndex(of: date) else { return nil }
+        return IndexPath(item: index, section: 1)
+    }
+
+    func setReservation(for date: Date, reserved: Bool) {
+        reservations[date] = reserved
+    }
+}

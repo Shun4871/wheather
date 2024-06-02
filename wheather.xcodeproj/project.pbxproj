@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE1325882C0B5E4000298FDB /* cloudy.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325802C0B5E4000298FDB /* cloudy.png */; };
+		CE1325892C0B5E4000298FDB /* rainy.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325812C0B5E4000298FDB /* rainy.png */; };
+		CE13258A2C0B5E4000298FDB /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325822C0B5E4000298FDB /* snow.png */; };
+		CE13258B2C0B5E4000298FDB /* sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325832C0B5E4000298FDB /* sunny.png */; };
+		CE13258C2C0B5E4000298FDB /* thunder.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325842C0B5E4000298FDB /* thunder.png */; };
+		CE13258D2C0B5E4000298FDB /* unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325852C0B5E4000298FDB /* unknown.png */; };
+		CE13258E2C0B5E4000298FDB /* wind.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325862C0B5E4000298FDB /* wind.png */; };
+		CE1325942C0B63C900298FDB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325932C0B63C900298FDB /* icon.png */; };
 		CEBA455E2C04CFED00C95299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455D2C04CFED00C95299 /* AppDelegate.swift */; };
 		CEBA45602C04CFED00C95299 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */; };
 		CEBA45622C04CFED00C95299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45612C04CFED00C95299 /* ViewController.swift */; };
@@ -15,16 +23,22 @@
 		CEBA456A2C04CFEE00C95299 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEBA45692C04CFEE00C95299 /* Base */; };
 		CEBA45742C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */; };
 		CEBA45762C08856500C95299 /* 3konngetu_no_tenkiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */; };
-		CEBA45782C08857900C95299 /* 4settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45772C08857900C95299 /* 4settingsViewController.swift */; };
+		CEBA45782C08857900C95299 /* 4SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45772C08857900C95299 /* 4SettingsViewController.swift */; };
 		CEBA457A2C0886C300C95299 /* 1WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */; };
-		CEBA457C2C088B7900C95299 /* 1WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA457B2C088B7900C95299 /* 1WeatherView.swift */; };
 		CEBA45812C08918700C95299 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBA45802C08918700C95299 /* CoreLocation.framework */; };
 		CEBA45A32C09D78900C95299 /* 3MonthDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */; };
 		CEBA45A72C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */; };
-		CEBA45AD2C09E04300C95299 /* 3extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45AC2C09E04300C95299 /* 3extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE1325802C0B5E4000298FDB /* cloudy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloudy.png; sourceTree = "<group>"; };
+		CE1325812C0B5E4000298FDB /* rainy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rainy.png; sourceTree = "<group>"; };
+		CE1325822C0B5E4000298FDB /* snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow.png; sourceTree = "<group>"; };
+		CE1325832C0B5E4000298FDB /* sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunny.png; sourceTree = "<group>"; };
+		CE1325842C0B5E4000298FDB /* thunder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thunder.png; sourceTree = "<group>"; };
+		CE1325852C0B5E4000298FDB /* unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknown.png; sourceTree = "<group>"; };
+		CE1325862C0B5E4000298FDB /* wind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wind.png; sourceTree = "<group>"; };
+		CE1325932C0B63C900298FDB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		CEBA455A2C04CFED00C95299 /* wheather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wheather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBA455D2C04CFED00C95299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,13 +49,11 @@
 		CEBA456B2C04CFEE00C95299 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 2kyou_no_tenkiTableViewController.swift; sourceTree = "<group>"; };
 		CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3konngetu_no_tenkiViewController.swift; sourceTree = "<group>"; };
-		CEBA45772C08857900C95299 /* 4settingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 4settingsViewController.swift; sourceTree = "<group>"; };
+		CEBA45772C08857900C95299 /* 4SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 4SettingsViewController.swift; sourceTree = "<group>"; };
 		CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 1WeatherViewController.swift; sourceTree = "<group>"; };
-		CEBA457B2C088B7900C95299 /* 1WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 1WeatherView.swift; sourceTree = "<group>"; };
 		CEBA45802C08918700C95299 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3MonthDateManager.swift; sourceTree = "<group>"; };
 		CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3CalendarCellCollectionViewCell.swift; sourceTree = "<group>"; };
-		CEBA45AC2C09E04300C95299 /* 3extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3extention.swift; sourceTree = "<group>"; };
 		CEBA45AE2C09FB2900C95299 /* wheather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wheather.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +69,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE1325872C0B5E4000298FDB /* tennkicharacters */ = {
+			isa = PBXGroup;
+			children = (
+				CE1325802C0B5E4000298FDB /* cloudy.png */,
+				CE1325812C0B5E4000298FDB /* rainy.png */,
+				CE1325822C0B5E4000298FDB /* snow.png */,
+				CE1325832C0B5E4000298FDB /* sunny.png */,
+				CE1325842C0B5E4000298FDB /* thunder.png */,
+				CE1325852C0B5E4000298FDB /* unknown.png */,
+				CE1325862C0B5E4000298FDB /* wind.png */,
+			);
+			path = tennkicharacters;
+			sourceTree = "<group>";
+		};
 		CEBA45512C04CFED00C95299 = {
 			isa = PBXGroup;
 			children = (
@@ -80,19 +106,18 @@
 				CEBA45AE2C09FB2900C95299 /* wheather.entitlements */,
 				CEBA455D2C04CFED00C95299 /* AppDelegate.swift */,
 				CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */,
+				CE1325932C0B63C900298FDB /* icon.png */,
 				CEBA45612C04CFED00C95299 /* ViewController.swift */,
 				CEBA45632C04CFED00C95299 /* Main.storyboard */,
 				CEBA45662C04CFEE00C95299 /* Assets.xcassets */,
 				CEBA45682C04CFEE00C95299 /* LaunchScreen.storyboard */,
 				CEBA456B2C04CFEE00C95299 /* Info.plist */,
 				CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */,
-				CEBA45772C08857900C95299 /* 4settingsViewController.swift */,
+				CEBA45772C08857900C95299 /* 4SettingsViewController.swift */,
 				CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */,
-				CEBA457B2C088B7900C95299 /* 1WeatherView.swift */,
 				CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */,
 				CEBA45A22C09D78900C95299 /* 3MonthDateManager.swift */,
 				CEBA45A62C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift */,
-				CEBA45AC2C09E04300C95299 /* 3extention.swift */,
 			);
 			path = wheather;
 			sourceTree = "<group>";
@@ -101,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				CEBA45802C08918700C95299 /* CoreLocation.framework */,
+				CE1325872C0B5E4000298FDB /* tennkicharacters */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,7 +189,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1325942C0B63C900298FDB /* icon.png in Resources */,
+				CE13258C2C0B5E4000298FDB /* thunder.png in Resources */,
+				CE13258E2C0B5E4000298FDB /* wind.png in Resources */,
+				CE13258B2C0B5E4000298FDB /* sunny.png in Resources */,
 				CEBA45672C04CFEE00C95299 /* Assets.xcassets in Resources */,
+				CE1325892C0B5E4000298FDB /* rainy.png in Resources */,
+				CE13258A2C0B5E4000298FDB /* snow.png in Resources */,
+				CE1325882C0B5E4000298FDB /* cloudy.png in Resources */,
+				CE13258D2C0B5E4000298FDB /* unknown.png in Resources */,
 				CEBA456A2C04CFEE00C95299 /* Base in Resources */,
 				CEBA45652C04CFED00C95299 /* Base in Resources */,
 			);
@@ -183,10 +217,8 @@
 				CEBA45602C04CFED00C95299 /* SceneDelegate.swift in Sources */,
 				CEBA457A2C0886C300C95299 /* 1WeatherViewController.swift in Sources */,
 				CEBA45A72C09DCE600C95299 /* 3CalendarCellCollectionViewCell.swift in Sources */,
-				CEBA45AD2C09E04300C95299 /* 3extention.swift in Sources */,
-				CEBA45782C08857900C95299 /* 4settingsViewController.swift in Sources */,
+				CEBA45782C08857900C95299 /* 4SettingsViewController.swift in Sources */,
 				CEBA45A32C09D78900C95299 /* 3MonthDateManager.swift in Sources */,
-				CEBA457C2C088B7900C95299 /* 1WeatherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

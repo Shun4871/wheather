@@ -16,24 +16,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zX-Fn-YoY">
-                                <rect key="frame" x="141" y="217" width="118" height="74"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="場所" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfL-Nf-rad">
+                                <rect key="frame" x="14" y="133" width="364" height="110"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="温度？" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1o-8D-eIb">
+                                <rect key="frame" x="69" y="200" width="268" height="81"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gkK-Id-Vui">
+                                <rect key="frame" x="328" y="59" width="49" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="天気">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="50"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="plain" image="reload.png"/>
                                 <connections>
-                                    <action selector="showWeatherView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bWz-hj-m3F"/>
+                                    <action selector="reload" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Bw-bp-aXi"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="天気" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZq-rm-G98">
+                                <rect key="frame" x="44" y="271" width="305" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jvS-qo-Xlv">
+                                <rect key="frame" x="96" y="404" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="天気予報" id="tY8-MC-8fj"/>
+                    <tabBarItem key="tabBarItem" title="天気予報" image="weather.png" id="tY8-MC-8fj"/>
                     <connections>
-                        <outlet property="weatherButton" destination="5zX-Fn-YoY" id="fpB-2K-6kM"/>
+                        <outlet property="characterImageView" destination="jvS-qo-Xlv" id="8js-tD-KOP"/>
+                        <outlet property="place" destination="sfL-Nf-rad" id="Nqe-ch-Mol"/>
+                        <outlet property="temperature" destination="f1o-8D-eIb" id="bhm-V8-6fn"/>
+                        <outlet property="weather" destination="LZq-rm-G98" id="LF3-xw-S3E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -71,7 +97,7 @@
                         <viewLayoutGuide key="safeArea" id="ZIp-cq-o9w"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="今月の予約" id="KGD-pP-Dvy"/>
+                    <tabBarItem key="tabBarItem" title="今月の予約" image="calender.png" id="KGD-pP-Dvy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="acX-fD-N29" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -80,14 +106,14 @@
         <!--設定-->
         <scene sceneID="aOr-Q5-9iX">
             <objects>
-                <viewController id="9tJ-LI-lHf" customClass="settingsViewController" customModule="wheather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9tJ-LI-lHf" customClass="SettingsViewController" customModule="wheather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5wi-rw-Ye9">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="avS-t6-src"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="設定" id="MDo-5b-pyr"/>
+                    <tabBarItem key="tabBarItem" title="設定" image="setting.png" id="MDo-5b-pyr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k9m-KN-4sA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -116,7 +142,7 @@
                             <outlet property="delegate" destination="sbr-uP-k4J" id="GHM-7F-eoz"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="今日の天気" id="DW4-px-XmU"/>
+                    <tabBarItem key="tabBarItem" title="今日の天気" image="umbrella.png" id="DW4-px-XmU"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0z-Kz-kq2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -124,6 +150,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="calender.png" width="32" height="32"/>
+        <image name="reload.png" width="32" height="32"/>
+        <image name="setting.png" width="32" height="32"/>
+        <image name="umbrella.png" width="32" height="32"/>
+        <image name="weather.png" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
