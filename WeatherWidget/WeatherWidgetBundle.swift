@@ -12,6 +12,6 @@ import SwiftUI
 struct WeatherWidgetBundle: WidgetBundle {
     var body: some Widget {
         WeatherWidget()
-       // WeatherWidgetLiveActivity()
+        //WeatherWidgetLiveActivity()
     }
 }

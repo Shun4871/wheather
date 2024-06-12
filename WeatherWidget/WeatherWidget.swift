@@ -1,77 +1,39 @@
+//
+//  WeatherWidget.swift
+//  WeatherWidget
+//
+//  Created by 柘植俊之介 on 2024/06/02.
+//
+
 import WidgetKit
 import SwiftUI
-import CoreLocation
-import WeatherKit
 
 struct Provider: AppIntentTimelineProvider {
-    let weatherService = WeatherService()
-    let locationManager = CLLocationManager()
-    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), weatherDescription: "N/A", configuration: ConfigurationAppIntent())
+        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), weatherDescription: "Loading...", configuration: configuration)
+        SimpleEntry(date: Date(), configuration: configuration)
     }
-
+    
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
 
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-
-        if let location = locationManager.location {
-            do {
-                let result = try await weatherService.weather(for: location)
-                let currentWeather = result.currentWeather
-                
-                let weatherDescription = getJapaneseWeatherDescription(from: currentWeather.condition)
-                
-                let currentDate = Date()
-                let entry = SimpleEntry(date: currentDate, weatherDescription: weatherDescription, configuration: configuration)
-                entries.append(entry)
-                
-                let timeline = Timeline(entries: entries, policy: .atEnd)
-                return timeline
-            } catch {
-                print("Failed to get weather data: \(error)")
-                let entry = SimpleEntry(date: Date(), weatherDescription: "Error", configuration: configuration)
-                entries.append(entry)
-                let timeline = Timeline(entries: entries, policy: .atEnd)
-                return timeline
-            }
-        } else {
-            let entry = SimpleEntry(date: Date(), weatherDescription: "Location not available", configuration: configuration)
+        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+        let currentDate = Date()
+        for hourOffset in 0 ..< 5 {
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            let entry = SimpleEntry(date: entryDate, configuration: configuration)
             entries.append(entry)
-            let timeline = Timeline(entries: entries, policy: .atEnd)
-            return timeline
         }
-    }
-    
-    func getJapaneseWeatherDescription(from condition: WeatherCondition) -> String {
-        switch condition {
-        case .clear:
-            return "晴れ"
-        case .cloudy:
-            return "曇り"
-        case .rain:
-            return "雨"
-        case .snow:
-            return "雪"
-        case .thunderstorms:
-            return "雷雨"
-        case .haze:
-            return "靄"
-        default:
-            return "不明な天気"
-        }
+
+        return Timeline(entries: entries, policy: .atEnd)
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let weatherDescription: String
     let configuration: ConfigurationAppIntent
 }
 
@@ -80,15 +42,15 @@ struct WeatherWidgetEntryView : View {
 
     var body: some View {
         VStack {
-            Text(entry.weatherDescription)
-                .font(.title)
-                .padding()
+            Text("Time:")
             Text(entry.date, style: .time)
+
+            Text("Favorite Emoji:")
+            Text(entry.configuration.favoriteEmoji)
         }
     }
 }
 
-@main
 struct WeatherWidget: Widget {
     let kind: String = "WeatherWidget"
 
@@ -117,38 +79,6 @@ extension ConfigurationAppIntent {
 #Preview(as: .systemSmall) {
     WeatherWidget()
 } timeline: {
-    SimpleEntry(date: .now, weatherDescription: "晴れ", configuration: .smiley)
-    SimpleEntry(date: .now, weatherDescription: "曇り", configuration: .starEyes)
-}
-
-struct LockedScreenWidgetEntryView : View {
-    var entry: Provider.Entry
-
-    @Environment(\.widgetFamily) var widgetFamily
-
-    var body: some View {
-        switch widgetFamily {
-        case .accessoryRectangular:
-            Text("accessoryRectangular")
-        case .accessoryCircular:
-            Text("accessoryCircular")
-        case .accessoryInline:
-            Text("accessoryInline")
-        default:
-            EmptyView()
-        }
-    }
-}
-
-struct LockedScreenWidget: Widget {
-    let kind: String = "LockedScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            LockedScreenWidgetEntryView(entry: entry)
-        }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
-        .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline])
-    }
+    SimpleEntry(date: .now, configuration: .smiley)
+    SimpleEntry(date: .now, configuration: .starEyes)
 }
