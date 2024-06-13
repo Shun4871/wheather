@@ -1,84 +1,95 @@
-//
-//  WeatherWidget.swift
-//  WeatherWidget
-//
-//  Created by 柘植俊之介 on 2024/06/02.
-//
-
 import WidgetKit
 import SwiftUI
+import CoreLocation
+import WeatherKit
 
-struct Provider: AppIntentTimelineProvider {
+struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        SimpleEntry(date: Date(), isRainExpected: false)
     }
 
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        let entry = SimpleEntry(date: Date(), isRainExpected: false)
+        completion(entry)
     }
-    
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
+        let location = CLLocation(latitude: 35.6895, longitude: 139.6917) // 東京の緯度経度を使用
 
-        return Timeline(entries: entries, policy: .atEnd)
+        Task {
+            do {
+                let weatherService = WeatherService.shared
+                let weather = try await weatherService.weather(for: location)
+                let isRainExpected = weather.currentWeather.condition == .rain || weather.currentWeather.condition == .heavyRain || weather.currentWeather.condition == .thunderstorms
+
+                var entries: [SimpleEntry] = []
+
+                for hourOffset in 0..<5 {
+                    let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+                    let entry = SimpleEntry(date: entryDate, isRainExpected: isRainExpected)
+                    entries.append(entry)
+                }
+
+                let timeline = Timeline(entries: entries, policy: .atEnd)
+                DispatchQueue.main.async {
+                    completion(timeline)
+                }
+            } catch {
+                print("Error fetching weather data: \(error)")
+                let entry = SimpleEntry(date: currentDate, isRainExpected: false)
+                let timeline = Timeline(entries: [entry], policy: .atEnd)
+                DispatchQueue.main.async {
+                    completion(timeline)
+                }
+            }
+        }
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
+    let isRainExpected: Bool
 }
 
-struct WeatherWidgetEntryView : View {
+struct WeatherWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
         VStack {
-            Text("Time:")
             Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+            if entry.isRainExpected {
+                Text("雨が降ります。傘を持ってください。")
+                    .font(.headline)
+                    .foregroundColor(.red)
+            } else {
+                Text("雨の心配はありません。")
+                    .font(.headline)
+                    .foregroundColor(.green)
+            }
         }
+        .padding()
     }
 }
 
+@main
 struct WeatherWidget: Widget {
     let kind: String = "WeatherWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             WeatherWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
         }
+        .configurationDisplayName("Weather Widget")
+        .description("雨の予報を表示します。")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
+struct WeatherWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        WeatherWidgetEntryView(entry: SimpleEntry(date: Date(), isRainExpected: true))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
 
-#Preview(as: .systemSmall) {
-    WeatherWidget()
-} timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
-}

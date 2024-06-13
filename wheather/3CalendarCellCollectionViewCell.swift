@@ -5,6 +5,7 @@ extension UIColor {
     static let lightBlue = UIColor(red: 92.0 / 255, green: 192.0 / 255, blue: 210.0 / 255, alpha: 1.0)
     static let lightRed = UIColor(red: 195.0 / 255, green: 123.0 / 255, blue: 175.0 / 255, alpha: 1.0)
     static let customOrange = UIColor(red: 251.0 / 255, green: 186.0 / 255, blue: 68.0 / 255, alpha: 1.0) // Custom orange color
+    static let customRed = UIColor(red: 71 / 255, green: 162 / 255, blue: 222 / 255, alpha: 1.0) // Custom red color
 }
 
 // Date formatting extension
@@ -74,8 +75,8 @@ final class CalendarCell: UICollectionViewCell {
         timeLabel.text = model.time
     }
 
-    func updateAppearanceForReservation(isReserved: Bool) {
-        selectionIndicator.backgroundColor = isReserved ? UIColor.customOrange : .clear
+    func updateAppearanceForReservation(isReserved: Bool, isWeekday: Bool = false) {
+        selectionIndicator.backgroundColor = isReserved ? (isWeekday ? UIColor.customRed : UIColor.customOrange) : .clear
     }
 
     func setSelectionIndicatorSize(size: CGFloat) {

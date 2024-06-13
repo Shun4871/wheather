@@ -3,7 +3,8 @@ import Foundation
 final class MonthDateManager {
     private var reservations: [Date: Bool] = [:]
     private var reservationTimes: [Date: String] = [:] // 予約時間を管理するプロパティ
-    private var weekdayReservationTimes: [Int: String] = [:] // 曜日ごとの予約時間を管理するプロパティ
+    private var weekdayReservations: [String: Bool] = [:] // 曜日の予約状況を管理するプロパティ
+    private var weekdayReservationTimes: [String: String] = [:] // 曜日の予約時間を管理するプロパティ
     private let calendar = Calendar.current
     private (set) var days: [Date] = []
     private var firstDate: Date! {
@@ -11,6 +12,9 @@ final class MonthDateManager {
            days = createDaysForMonth()
         }
     }
+
+    // 曜日の配列
+    private let weeks = ["日", "月", "火", "水", "木", "金", "土"]
 
     var monthString: String {
         return firstDate.string(format: "YYYY/MM")
@@ -62,15 +66,27 @@ final class MonthDateManager {
         return reservationTimes[date]
     }
 
-    func setReservationTimeForWeekday(_ weekday: Int, time: String) {
+    func setReservationTime(for weekday: String, time: String) {
         weekdayReservationTimes[weekday] = time
-        for date in days where Calendar.current.component(.weekday, from: date) == weekday + 1 {
-            setReservationTime(for: date, time: time)
-        }
     }
 
-    func getReservationTimeForWeekday(_ weekday: Int) -> String? {
+    func getReservationTime(for weekday: String) -> String? {
         return weekdayReservationTimes[weekday]
+    }
+
+    func setWeekdayReservation(for weekday: String, reserved: Bool) {
+        weekdayReservations[weekday] = reserved
+    }
+
+    func isWeekdayReserved(for weekday: String) -> Bool {
+        return weekdayReservations[weekday] ?? false
+    }
+
+    func getDates(for weekday: String) -> [Date] {
+        return days.filter { date in
+            let components = calendar.dateComponents([.weekday], from: date)
+            return weeks[components.weekday! - 1] == weekday
+        }
     }
 
     func indexPath(for date: Date) -> IndexPath? {
