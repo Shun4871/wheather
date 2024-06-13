@@ -73,7 +73,7 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         dailyConfirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 20) // フォントサイズを調整
         dailyConfirmButton.layer.cornerRadius = 10
         dailyConfirmButton.layer.masksToBounds = true
-        dailyConfirmButton.addTarget(self, action: #selector(donePickingDailyTime), for: .touchUpInside)
+        dailyConfirmButton.addTarget(self, action: #selector(confirmDailyTimeChange), for: .touchUpInside)
 
         let buttonStackView = UIStackView(arrangedSubviews: [confirmButton, dailyConfirmButton])
         buttonStackView.axis = .vertical
@@ -120,6 +120,17 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
             checkWeatherAndScheduleNotification(for: newNotification, at: selectedTime, indexPath: newIndexPath)
             tableView.reloadData()
         }
+    }
+
+    @objc func confirmDailyTimeChange() {
+        let alertController = UIAlertController(title: "確認", message: "本当に朝の通知時間を変更しますか？", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "はい", style: .default) { [weak self] _ in
+            self?.donePickingDailyTime()
+        }
+        let cancelAction = UIAlertAction(title: "いいえ", style: .cancel, handler: nil)
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 
     @objc func donePickingDailyTime() {
@@ -306,28 +317,29 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
                     }
                 }
 
-                let content = UNMutableNotificationContent()
-                content.title = "朝の天気"
                 if willRain {
+                    let content = UNMutableNotificationContent()
+                    content.title = "朝の天気"
                     content.body = "雨が降る予定です。傘を持って行きましょう！"
-                } else {
-                    content.body = "雨が降る予定はありません。傘は不要です！！"
-                }
-                content.sound = UNNotificationSound.default
+                    content.sound = UNNotificationSound.default
 
-                var dateComponents = DateComponents()
-                dateComponents.hour = Calendar.current.component(.hour, from: time)
-                dateComponents.minute = Calendar.current.component(.minute, from: time)
+                    var dateComponents = DateComponents()
+                    dateComponents.hour = Calendar.current.component(.hour, from: time)
+                    dateComponents.minute = Calendar.current.component(.minute, from: time)
 
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: "dailyNotification", content: content, trigger: trigger)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                    let request = UNNotificationRequest(identifier: "dailyNotification", content: content, trigger: trigger)
 
-                UNUserNotificationCenter.current().add(request) { (error) in
-                    if let error = error {
-                        print("毎日の通知のスケジューリングに失敗しました: \(error)")
-                    } else {
-                        print("毎日の通知がスケジュールされました: \(time)")
+                    UNUserNotificationCenter.current().add(request) { (error) in
+                        if let error = error {
+                            print("毎日の通知のスケジューリングに失敗しました: \(error)")
+                        } else {
+                            print("毎日の通知がスケジュールされました: \(time)")
+                        }
                     }
+                } else {
+                    // 雨が降らない場合は通知をキャンセル
+                    cancelDailyNotification()
                 }
             } catch {
                 print("天気情報の取得に失敗しました: \(error)")
