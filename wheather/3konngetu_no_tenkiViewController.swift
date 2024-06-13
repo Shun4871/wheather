@@ -7,7 +7,7 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
 
     private let dateManager = MonthDateManager()
     private let weeks = ["日","月", "火", "水", "木", "金", "土"]
-    private let itemSize: CGFloat = (UIScreen.main.bounds.width - 60) / 7
+    private let itemSize: CGFloat = (UIScreen.main.bounds.width - 40) / 7 // 間隔を考慮して調整
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
     private let weatherService = WeatherService()
@@ -16,75 +16,108 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
+        layout.minimumInteritemSpacing = 0 // 水平方向の間隔を0に設定
         layout.itemSize = CGSize(width: itemSize, height: 50)
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
+        collectionView.layer.cornerRadius = 12 // 角を丸くする
+        collectionView.layer.masksToBounds = true // サブビューに角の設定を適用
         collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.delegate = self
         collectionView.dataSource = self
         return collectionView
     }()
 
+    private lazy var monthLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.text = dateManager.monthString
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.layer.borderColor = UIColor.lightGray.cgColor
+        label.layer.borderWidth = 1
+        return label
+    }()
+
+    private lazy var monthLabelContainer: UIView = {
+        let paddingView = UIView()
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        paddingView.backgroundColor = .white
+        paddingView.layer.cornerRadius = 10
+        paddingView.layer.masksToBounds = true
+        paddingView.layer.borderColor = UIColor.lightGray.cgColor
+        paddingView.layer.borderWidth = 1
+        paddingView.addSubview(monthLabel)
+
+        NSLayoutConstraint.activate([
+            monthLabel.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 100),
+            monthLabel.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -100),
+            monthLabel.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 40),
+            monthLabel.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -40)
+        ])
+
+        return paddingView
+    }()
+
+
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        calendarCollectionView.frame.size.width = view.bounds.width
-        calendarCollectionView.frame.size.height = 500
-        view.addSubview(calendarCollectionView)
-        setUpNavigationBar()
-        adjustCalendarPosition(x: calendarCollectionView.frame.origin.x, y: calendarCollectionView.frame.origin.y + 150)
-        setupLocationManager()
         setupBackgroundColor()
+        setupLocationManager()
+        setupViews()
+        adjustCalendarPosition()
     }
-    
-    
+
     func setupBackgroundColor() {
         let backgroundColor = UIColor(red: 115/255.0, green: 203/255.0, blue: 249/255.0, alpha: 1.0)
         view.backgroundColor = backgroundColor
     }
-    
-    
+
     private func setupLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
 
-    func adjustCalendarPosition(x: CGFloat, y: CGFloat) {
-        calendarCollectionView.frame.origin = CGPoint(x: x, y: y)
+    private func setupViews() {
+        view.addSubview(monthLabelContainer)
+        view.addSubview(calendarCollectionView)
+
+        monthLabelContainer.translatesAutoresizingMaskIntoConstraints = false
+        calendarCollectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            monthLabelContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            monthLabelContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            calendarCollectionView.topAnchor.constraint(equalTo: monthLabelContainer.bottomAnchor, constant: 16),
+            calendarCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            calendarCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            calendarCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150)
+        ])
     }
 
-    private func setUpNavigationBar() {
-        navigationController?.navigationBar.barTintColor = UIColor(red: 255/255, green: 132/255, blue: 214/255, alpha: 1)
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "next",
-            style: .plain,
-            target: self,
-            action: #selector(actionNext)
-        )
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "back",
-            style: .plain,
-            target: self,
-            action: #selector(actionBack)
-        )
-        title = dateManager.monthString
+    func adjustCalendarPosition() {
+        calendarCollectionView.frame.size.width = view.bounds.width
+        calendarCollectionView.frame.size.height = 500
     }
 
     @objc private func actionNext() {
         dateManager.nextMonth()
         calendarCollectionView.reloadData()
-        title = dateManager.monthString
+        monthLabel.text = dateManager.monthString
     }
 
     @objc private func actionBack() {
         dateManager.prevMonth()
         calendarCollectionView.reloadData()
-        title = dateManager.monthString
+        monthLabel.text = dateManager.monthString
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -184,15 +217,13 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
             if currentWeather.condition == .rain {
                 content.title = "予約通知"
                 content.body = "傘持ちましたか？雨ってるよ"
-            } else if currentWeather.condition == .heavyRain{
+            } else if currentWeather.condition == .heavyRain {
                 content.title = "予約通知"
                 content.body = "傘持ちましたか？大雨降ってるよ"
-            }else if currentWeather.condition == .thunderstorms{
+            } else if currentWeather.condition == .thunderstorms {
                 content.title = "予約通知"
                 content.body = "傘持ちましたか？今雷だよ"
-            }
-            
-            else {
+            } else {
                 content.title = "お知らせ"
                 content.body = "雨降らなかったよ"
             }
@@ -223,7 +254,6 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
             print("天気情報の取得に失敗しました: \(error)")
         }
     }
-
 
     // CLLocationManagerDelegate メソッド
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

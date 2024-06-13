@@ -95,7 +95,8 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         if let selectedTime = selectedTime {
             let newNotification = WeatherNotification(date: selectedTime, isRainExpected: true, isNotificationEnabled: true)
             notifications.append(newNotification)
-            checkWeatherAndScheduleNotification(for: newNotification, at: selectedTime)
+            let newIndexPath = IndexPath(row: notifications.count - 1, section: 0)
+            checkWeatherAndScheduleNotification(for: newNotification, at: selectedTime, indexPath: newIndexPath)
             tableView.reloadData()
         }
     }
@@ -119,6 +120,7 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
 
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(notification.isNotificationEnabled, animated: true)
+        switchView.tag = indexPath.row
         switchView.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
         cell.accessoryView = switchView
 
@@ -147,19 +149,19 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     }
 
     @objc func switchChanged(_ sender: UISwitch) {
-        if let cell = sender.superview as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
-            let notification = notifications[indexPath.row]
-            if sender.isOn {
-                checkWeatherAndScheduleNotification(for: notification, at: notification.date)
-                notifications[indexPath.row].isNotificationEnabled = true
-            } else {
-                cancelNotification(for: notification)
-                notifications[indexPath.row].isNotificationEnabled = false
-            }
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        let notification = notifications[indexPath.row]
+        if sender.isOn {
+            notifications[indexPath.row].isNotificationEnabled = true
+            checkWeatherAndScheduleNotification(for: notification, at: notification.date, indexPath: indexPath)
+        } else {
+            notifications[indexPath.row].isNotificationEnabled = false
+            cancelNotification(for: notification)
         }
+        tableView.reloadData()
     }
 
-    func checkWeatherAndScheduleNotification(for notification: WeatherNotification, at time: Date) {
+    func checkWeatherAndScheduleNotification(for notification: WeatherNotification, at time: Date, indexPath: IndexPath) {
         guard let location = userLocation else {
             print("User location not available")
             return
@@ -185,9 +187,9 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
                     }
                 }
 
-                if willRain {
+                if willRain && notifications[indexPath.row].isNotificationEnabled {
                     scheduleNotification(for: notification, at: time, message: "雨が降る予定です。傘を持って行きましょう！")
-                } else {
+                } else if notifications[indexPath.row].isNotificationEnabled {
                     scheduleNotification(for: notification, at: time, message: "雨が降る予定はありません。傘は不要です！")
                 }
             } catch {
