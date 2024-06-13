@@ -6,11 +6,12 @@ import WeatherKit
 final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, CLLocationManagerDelegate {
 
     private let dateManager = MonthDateManager()
-    private let weeks = ["日","月", "火", "水", "木", "金", "土"]
+    private let weeks = ["日", "月", "火", "水", "木", "金", "土"]
     private let itemSize: CGFloat = (UIScreen.main.bounds.width - 40) / 7 // 間隔を考慮して調整
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
     private let weatherService = WeatherService()
+    private var selectedWeekday: Int?
 
     private lazy var calendarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -33,11 +34,7 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         label.font = UIFont.systemFont(ofSize: 24)
         label.textAlignment = .center
         label.text = dateManager.monthString
-        label.backgroundColor = .white
-        label.layer.cornerRadius = 10
-        label.layer.masksToBounds = true
-        label.layer.borderColor = UIColor.lightGray.cgColor
-        label.layer.borderWidth = 1
+        label.backgroundColor = .clear // 背景色をクリアに設定
         return label
     }()
 
@@ -45,24 +42,27 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         let paddingView = UIView()
         paddingView.translatesAutoresizingMaskIntoConstraints = false
         paddingView.backgroundColor = .white
-        paddingView.layer.cornerRadius = 10
+        paddingView.layer.cornerRadius = 25 // 角の半径を調整して円にする
         paddingView.layer.masksToBounds = true
         paddingView.layer.borderColor = UIColor.lightGray.cgColor
         paddingView.layer.borderWidth = 1
         paddingView.addSubview(monthLabel)
 
+        monthLabel.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            monthLabel.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 100),
-            monthLabel.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -100),
-            monthLabel.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 40),
-            monthLabel.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -40)
+            monthLabel.centerXAnchor.constraint(equalTo: paddingView.centerXAnchor),
+            monthLabel.centerYAnchor.constraint(equalTo: paddingView.centerYAnchor),
+            monthLabel.leadingAnchor.constraint(equalTo: paddingView.leadingAnchor, constant: 16),
+            monthLabel.trailingAnchor.constraint(equalTo: paddingView.trailingAnchor, constant: -16),
+            monthLabel.topAnchor.constraint(equalTo: paddingView.topAnchor, constant: 8),
+            monthLabel.bottomAnchor.constraint(equalTo: paddingView.bottomAnchor, constant: -8),
+            paddingView.heightAnchor.constraint(equalToConstant: 55), // 円の高さを設定
+            paddingView.widthAnchor.constraint(equalTo: paddingView.heightAnchor, multiplier: 2.8) // 横の幅を高さの半分に設定
         ])
 
         return paddingView
     }()
-
-
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +102,6 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         ])
     }
 
-
     func adjustCalendarPosition() {
         calendarCollectionView.frame.size.width = view.bounds.width
         calendarCollectionView.frame.size.height = 500
@@ -132,7 +131,8 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CalendarCell
         if indexPath.section == 0 {
             let day = weeks[indexPath.row]
-            cell.configure(model: CalendarCell.Model(text: day, textColor: .black))
+            let isSelected = indexPath.row == selectedWeekday
+            cell.configure(model: CalendarCell.Model(text: day, textColor: isSelected ? .blue : .black))
         } else {
             let date = dateManager.days[indexPath.row]
             let isReserved = dateManager.isReserved(for: date)
@@ -146,16 +146,19 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            return
+            selectedWeekday = indexPath.row
+            presentTimeSelectionDialog(for: nil, weekday: indexPath.row)
+        } else {
+            let date = dateManager.days[indexPath.row]
+            let originalReservationStatus = dateManager.isReserved(for: date)
+            dateManager.toggleReservation(for: date)
+            collectionView.reloadItems(at: [indexPath])
+            presentTimeSelectionDialog(for: date, weekday: nil, originalReservationStatus: originalReservationStatus)
         }
-        let date = dateManager.days[indexPath.row]
-        let originalReservationStatus = dateManager.isReserved(for: date)
-        dateManager.toggleReservation(for: date)
-        collectionView.reloadItems(at: [indexPath])
-        presentTimeSelectionDialog(for: date, originalReservationStatus: originalReservationStatus)
+        collectionView.reloadData()
     }
 
-    func presentTimeSelectionDialog(for date: Date, originalReservationStatus: Bool) {
+    func presentTimeSelectionDialog(for date: Date?, weekday: Int?, originalReservationStatus: Bool? = nil) {
         let alertController = UIAlertController(title: "時間を選択", message: nil, preferredStyle: .alert)
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
@@ -177,20 +180,29 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
             let timeString = formatter.string(from: selectedTime)
-            self.dateManager.setReservationTime(for: date, time: timeString)
-            Task {
-                await self.scheduleNotification(for: date, time: timeString)
-                if let indexPath = self.dateManager.indexPath(for: date) {
-                    self.calendarCollectionView.reloadItems(at: [indexPath])
+            if let weekday = weekday {
+                self.dateManager.setReservationTimeForWeekday(weekday, time: timeString)
+                Task {
+                    await self.scheduleNotificationForWeekday(weekday, time: timeString)
+                    self.calendarCollectionView.reloadData()
+                }
+            } else if let date = date {
+                self.dateManager.setReservationTime(for: date, time: timeString)
+                Task {
+                    await self.scheduleNotification(for: date, time: timeString)
+                    if let indexPath = self.dateManager.indexPath(for: date) {
+                        self.calendarCollectionView.reloadItems(at: [indexPath])
+                    }
                 }
             }
         }))
 
         alertController.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: { _ in
-            // キャンセルを選択した場合、予約状況を元に戻す
-            self.dateManager.setReservation(for: date, reserved: originalReservationStatus)
-            if let indexPath = self.dateManager.indexPath(for: date) {
-                self.calendarCollectionView.reloadItems(at: [indexPath])
+            if let date = date, let originalReservationStatus = originalReservationStatus {
+                self.dateManager.setReservation(for: date, reserved: originalReservationStatus)
+                if let indexPath = self.dateManager.indexPath(for: date) {
+                    self.calendarCollectionView.reloadItems(at: [indexPath])
+                }
             }
         }))
 
@@ -252,6 +264,17 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
             }
         } catch {
             print("天気情報の取得に失敗しました: \(error)")
+        }
+    }
+
+    func scheduleNotificationForWeekday(_ weekday: Int, time: String) async {
+        guard let location = userLocation else {
+            print("User location not available")
+            return
+        }
+
+        for date in dateManager.days where Calendar.current.component(.weekday, from: date) == weekday + 1 {
+            await scheduleNotification(for: date, time: time)
         }
     }
 
