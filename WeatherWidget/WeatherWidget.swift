@@ -57,13 +57,12 @@ struct WeatherWidgetEntryView: View {
 
     var body: some View {
         VStack {
-            Text(entry.date, style: .time)
             if entry.isRainExpected {
-                Text("雨が降ります。傘を持ってください。")
+                Text("☂️必要☂️")
                     .font(.headline)
                     .foregroundColor(.red)
             } else {
-                Text("雨の心配はありません。")
+                Text("🌂降ってない")
                     .font(.headline)
                     .foregroundColor(.green)
             }
@@ -72,7 +71,25 @@ struct WeatherWidgetEntryView: View {
     }
 }
 
-@main
+struct WeatherLockScreenEntryView: View {
+    var entry: Provider.Entry
+
+    var body: some View {
+        VStack {
+            if entry.isRainExpected {
+                Text("傘必要!!")
+                    .font(.system(size: 15)) // フォントサイズを小さく調整
+                    .foregroundColor(.red)
+            } else {
+                Text("雨は降ってない")
+                    .font(.system(size: 15)) // フォントサイズを小さく調整
+                    .foregroundColor(.green)
+            }
+        }
+        .padding()
+    }
+}
+
 struct WeatherWidget: Widget {
     let kind: String = "WeatherWidget"
 
@@ -82,14 +99,18 @@ struct WeatherWidget: Widget {
         }
         .configurationDisplayName("Weather Widget")
         .description("雨の予報を表示します。")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }
 
 struct WeatherWidget_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherWidgetEntryView(entry: SimpleEntry(date: Date(), isRainExpected: true))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        Group {
+            WeatherWidgetEntryView(entry: SimpleEntry(date: Date(), isRainExpected: true))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+
+            WeatherLockScreenEntryView(entry: SimpleEntry(date: Date(), isRainExpected: true))
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+        }
     }
 }
-

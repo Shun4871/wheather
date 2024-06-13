@@ -3,6 +3,13 @@ import UserNotifications
 import CoreLocation
 import WeatherKit
 
+struct WeatherNotification {
+    var date: Date
+    var isRainExpected: Bool
+    var isNotificationEnabled: Bool
+    var identifier: String
+}
+
 class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     let locationManager = CLLocationManager()
@@ -10,9 +17,12 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     let weatherService = WeatherService()
     var notifications: [WeatherNotification] = []
     var selectedTime: Date?
+    var dailyNotificationTime: Date?
+    var isDailyNotificationEnabled = false
 
     var timePicker: UIPickerView!
     var confirmButton: UIButton!
+    var dailyConfirmButton: UIButton!
     var buttonTopConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
@@ -22,6 +32,7 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         setupNotification()
         setupTimePickerAndButton()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(DailyNotificationCell.self, forCellReuseIdentifier: "DailyCell")
         tableView.tableFooterView = UIView()
     }
 
@@ -55,7 +66,16 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         confirmButton.layer.masksToBounds = true
         confirmButton.addTarget(self, action: #selector(donePickingTime), for: .touchUpInside)
 
-        let buttonStackView = UIStackView(arrangedSubviews: [confirmButton])
+        dailyConfirmButton = UIButton(type: .system)
+        dailyConfirmButton.setTitle("毎日の通知を設定", for: .normal)
+        dailyConfirmButton.backgroundColor = UIColor(red: 32/255.0, green: 133/255.0, blue: 199/255.0, alpha: 1.0)
+        dailyConfirmButton.setTitleColor(.white, for: .normal)
+        dailyConfirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 20) // フォントサイズを調整
+        dailyConfirmButton.layer.cornerRadius = 10
+        dailyConfirmButton.layer.masksToBounds = true
+        dailyConfirmButton.addTarget(self, action: #selector(donePickingDailyTime), for: .touchUpInside)
+
+        let buttonStackView = UIStackView(arrangedSubviews: [confirmButton, dailyConfirmButton])
         buttonStackView.axis = .vertical
         buttonStackView.spacing = 8
 
@@ -69,10 +89,11 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
 
         let headerView = UIView()
         headerView.addSubview(stackView)
-        headerView.frame.size.height = 300 // ボタンとピッカーの高さと余白を考慮
+        headerView.frame.size.height = 350 // ボタンとピッカーの高さと余白を考慮
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        dailyConfirmButton.translatesAutoresizingMaskIntoConstraints = false
         timePicker.translatesAutoresizingMaskIntoConstraints = false
 
         buttonTopConstraint = confirmButton.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 8)
@@ -93,10 +114,20 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     @objc func donePickingTime() {
         view.endEditing(true)
         if let selectedTime = selectedTime {
-            let newNotification = WeatherNotification(date: selectedTime, isRainExpected: true, isNotificationEnabled: true)
+            let newNotification = WeatherNotification(date: selectedTime, isRainExpected: true, isNotificationEnabled: true, identifier: UUID().uuidString)
             notifications.append(newNotification)
-            let newIndexPath = IndexPath(row: notifications.count - 1, section: 0)
+            let newIndexPath = IndexPath(row: notifications.count - 1, section: 1) // セクションを1に変更
             checkWeatherAndScheduleNotification(for: newNotification, at: selectedTime, indexPath: newIndexPath)
+            tableView.reloadData()
+        }
+    }
+
+    @objc func donePickingDailyTime() {
+        view.endEditing(true)
+        if let selectedTime = selectedTime {
+            dailyNotificationTime = selectedTime
+            isDailyNotificationEnabled = true
+            scheduleDailyNotification(at: selectedTime)
             tableView.reloadData()
         }
     }
@@ -104,31 +135,53 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        if section == 0 {
+            return 1 // 毎日の通知設定用セル
+        } else {
+            return notifications.count // 通常の通知セル
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let notification = notifications[indexPath.row]
-        cell.textLabel?.text = notification.date.string(format: "HH:mm")
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 28) // フォントサイズを大きく
-        cell.textLabel?.textAlignment = .center // 中央揃え
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "DailyCell", for: indexPath) as? DailyNotificationCell else {
+                return UITableViewCell()
+            }
+            let timeText = dailyNotificationTime?.string(format: "HH:mm") ?? "未設定"
+            cell.textLabel?.text = "朝の通知: \(timeText)"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 28) // フォントサイズを大きく
+            cell.textLabel?.textAlignment = .center // 中央揃え
+            cell.timeLabel.text = timeText
 
-        let switchView = UISwitch(frame: .zero)
-        switchView.setOn(notification.isNotificationEnabled, animated: true)
-        switchView.tag = indexPath.row
-        switchView.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
-        cell.accessoryView = switchView
+            let switchView = UISwitch(frame: .zero)
+            switchView.setOn(isDailyNotificationEnabled, animated: true)
+            switchView.addTarget(self, action: #selector(dailySwitchChanged(_:)), for: .valueChanged)
+            cell.accessoryView = switchView
 
-        return cell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            let notification = notifications[indexPath.row]
+            cell.textLabel?.text = notification.date.string(format: "HH:mm")
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 28) // フォントサイズを大きく
+            cell.textLabel?.textAlignment = .center // 中央揃え
+
+            let switchView = UISwitch(frame: .zero)
+            switchView.setOn(notification.isNotificationEnabled, animated: true)
+            switchView.tag = indexPath.row
+            switchView.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
+            cell.accessoryView = switchView
+
+            return cell
+        }
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        if indexPath.section == 1 && editingStyle == .delete {
             cancelNotification(for: notifications[indexPath.row])
             notifications.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -136,20 +189,23 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "削除") { (action, indexPath) in
-            self.cancelNotification(for: self.notifications[indexPath.row])
-            self.notifications.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+        if indexPath.section == 1 {
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "削除") { (action, indexPath) in
+                self.cancelNotification(for: self.notifications[indexPath.row])
+                self.notifications.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            return [deleteAction]
         }
-        return [deleteAction]
+        return []
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70 // セルの高さを調整
+        return 100 // セルの高さを調整
     }
 
     @objc func switchChanged(_ sender: UISwitch) {
-        let indexPath = IndexPath(row: sender.tag, section: 0)
+        let indexPath = IndexPath(row: sender.tag, section: 1)
         let notification = notifications[indexPath.row]
         if sender.isOn {
             notifications[indexPath.row].isNotificationEnabled = true
@@ -157,6 +213,16 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         } else {
             notifications[indexPath.row].isNotificationEnabled = false
             cancelNotification(for: notification)
+        }
+        tableView.reloadData()
+    }
+
+    @objc func dailySwitchChanged(_ sender: UISwitch) {
+        isDailyNotificationEnabled = sender.isOn
+        if isDailyNotificationEnabled, let dailyNotificationTime = dailyNotificationTime {
+            scheduleDailyNotification(at: dailyNotificationTime)
+        } else {
+            cancelDailyNotification()
         }
         tableView.reloadData()
     }
@@ -206,7 +272,7 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
 
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: time)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
@@ -217,8 +283,64 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
         }
     }
 
+    func scheduleDailyNotification(at time: Date) {
+        guard let location = userLocation else {
+            print("User location not available")
+            return
+        }
+
+        Task {
+            do {
+                let result = try await weatherService.weather(for: location)
+                let hourlyForecast = result.hourlyForecast
+
+                var willRain = false
+
+                for hourWeather in hourlyForecast {
+                    let forecastTime = hourWeather.date
+                    if Calendar.current.isDate(forecastTime, equalTo: time, toGranularity: .day) {
+                        if hourWeather.condition == .rain || hourWeather.condition == .heavyRain || hourWeather.condition == .thunderstorms {
+                            willRain = true
+                            break
+                        }
+                    }
+                }
+
+                let content = UNMutableNotificationContent()
+                content.title = "朝の天気"
+                if willRain {
+                    content.body = "雨が降る予定です。傘を持って行きましょう！"
+                } else {
+                    content.body = "雨が降る予定はありません。傘は不要です！！"
+                }
+                content.sound = UNNotificationSound.default
+
+                var dateComponents = DateComponents()
+                dateComponents.hour = Calendar.current.component(.hour, from: time)
+                dateComponents.minute = Calendar.current.component(.minute, from: time)
+
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                let request = UNNotificationRequest(identifier: "dailyNotification", content: content, trigger: trigger)
+
+                UNUserNotificationCenter.current().add(request) { (error) in
+                    if let error = error {
+                        print("毎日の通知のスケジューリングに失敗しました: \(error)")
+                    } else {
+                        print("毎日の通知がスケジュールされました: \(time)")
+                    }
+                }
+            } catch {
+                print("天気情報の取得に失敗しました: \(error)")
+            }
+        }
+    }
+
     func cancelNotification(for notification: WeatherNotification) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.date.string(format: "YYYY-MM-dd-HH-mm")])
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.identifier])
+    }
+
+    func cancelDailyNotification() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["dailyNotification"])
     }
 
     func cancelNotification() {
@@ -262,9 +384,33 @@ class KyouNoTenkiTableViewController: UITableViewController, CLLocationManagerDe
     }
 }
 
-// WeatherNotification データモデルの定義
-struct WeatherNotification {
-    var date: Date
-    var isRainExpected: Bool
-    var isNotificationEnabled: Bool
+// Custom UITableViewCell for Daily Notification
+class DailyNotificationCell: UITableViewCell {
+    let timeLabel: UILabel
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        timeLabel = UILabel()
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupTimeLabel()
+    }
+
+    required init?(coder: NSCoder) {
+        timeLabel = UILabel()
+        super.init(coder: coder)
+        setupTimeLabel()
+    }
+
+    private func setupTimeLabel() {
+        timeLabel.font = UIFont.systemFont(ofSize: 20)
+        timeLabel.textAlignment = .center
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(timeLabel)
+
+        NSLayoutConstraint.activate([
+            timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            timeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            timeLabel.topAnchor.constraint(equalTo: textLabel!.bottomAnchor, constant: 8),
+            timeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ])
+    }
 }

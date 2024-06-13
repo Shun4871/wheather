@@ -64,6 +64,15 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         return paddingView
     }()
 
+    private lazy var infoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.textAlignment = .center
+        label.text = "日にちを押して雨が降る予測したい時間を予約! 曜日を押すとその曜日全てに反映されます!"
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,9 +97,11 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
     private func setupViews() {
         view.addSubview(monthLabelContainer)
         view.addSubview(calendarCollectionView)
+        view.addSubview(infoLabel)
 
         monthLabelContainer.translatesAutoresizingMaskIntoConstraints = false
         calendarCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             monthLabelContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -99,7 +110,11 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
             calendarCollectionView.topAnchor.constraint(equalTo: monthLabelContainer.bottomAnchor, constant: 16),
             calendarCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             calendarCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            calendarCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150)
+            calendarCollectionView.bottomAnchor.constraint(equalTo: infoLabel.topAnchor, constant: -16),
+
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            infoLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
         ])
     }
 
@@ -348,7 +363,7 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
 
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: formatter.string(from: date), content: content, trigger: trigger)
 
             do {
                 try await UNUserNotificationCenter.current().add(request)
@@ -359,6 +374,15 @@ final class konngetu_no_tenkiViewController: UIViewController, UICollectionViewD
         } catch {
             print("天気情報の取得に失敗しました: \(error)")
         }
+    }
+
+    func removeNotification(for date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd-HH-mm"
+        let identifier = formatter.string(from: date)
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("通知が削除されました: \(identifier)")
     }
 
     // CLLocationManagerDelegate メソッド
