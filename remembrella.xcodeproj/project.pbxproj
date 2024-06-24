@@ -14,7 +14,6 @@
 		CE13258C2C0B5E4000298FDB /* thunder.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325842C0B5E4000298FDB /* thunder.png */; };
 		CE13258D2C0B5E4000298FDB /* unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325852C0B5E4000298FDB /* unknown.png */; };
 		CE13258E2C0B5E4000298FDB /* wind.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325862C0B5E4000298FDB /* wind.png */; };
-		CE1325942C0B63C900298FDB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1325932C0B63C900298FDB /* icon.png */; };
 		CE1325F32C0C757400298FDB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE13259C2C0C038600298FDB /* WidgetKit.framework */; };
 		CE1325F42C0C757400298FDB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE13259E2C0C038700298FDB /* SwiftUI.framework */; };
 		CE1325F72C0C757400298FDB /* WeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1325F62C0C757400298FDB /* WeatherWidgetBundle.swift */; };
@@ -23,6 +22,7 @@
 		CE1325FD2C0C757400298FDB /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1325FC2C0C757400298FDB /* AppIntent.swift */; };
 		CE1325FF2C0C757700298FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1325FE2C0C757700298FDB /* Assets.xcassets */; };
 		CE1326032C0C757700298FDB /* WeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1325F22C0C757400298FDB /* WeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */; };
 		CEBA455E2C04CFED00C95299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455D2C04CFED00C95299 /* AppDelegate.swift */; };
 		CEBA45602C04CFED00C95299 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */; };
 		CEBA45622C04CFED00C95299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45612C04CFED00C95299 /* ViewController.swift */; };
@@ -69,7 +69,6 @@
 		CE1325842C0B5E4000298FDB /* thunder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thunder.png; sourceTree = "<group>"; };
 		CE1325852C0B5E4000298FDB /* unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknown.png; sourceTree = "<group>"; };
 		CE1325862C0B5E4000298FDB /* wind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wind.png; sourceTree = "<group>"; };
-		CE1325932C0B63C900298FDB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		CE13259C2C0C038600298FDB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		CE13259E2C0C038700298FDB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		CE1325D32C0C071D00298FDB /* remembrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remembrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +79,7 @@
 		CE1325FC2C0C757400298FDB /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		CE1325FE2C0C757700298FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1326002C0C757700298FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CEBA455D2C04CFED00C95299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CEBA45612C04CFED00C95299 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +140,7 @@
 				CE1325F82C0C757400298FDB /* WeatherWidgetLiveActivity.swift */,
 				CE1325FE2C0C757700298FDB /* Assets.xcassets */,
 				CE1326002C0C757700298FDB /* Info.plist */,
+				CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */,
 			);
 			path = WeatherWidget;
 			sourceTree = "<group>";
@@ -161,7 +162,6 @@
 				CEBA45AE2C09FB2900C95299 /* wheather.entitlements */,
 				CEBA455D2C04CFED00C95299 /* AppDelegate.swift */,
 				CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */,
-				CE1325932C0B63C900298FDB /* icon.png */,
 				CEBA45612C04CFED00C95299 /* ViewController.swift */,
 				CEBA45632C04CFED00C95299 /* Main.storyboard */,
 				CEBA45662C04CFEE00C95299 /* Assets.xcassets */,
@@ -276,12 +276,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE1325942C0B63C900298FDB /* icon.png in Resources */,
 				CE13258C2C0B5E4000298FDB /* thunder.png in Resources */,
 				CE13258E2C0B5E4000298FDB /* wind.png in Resources */,
 				CE13258B2C0B5E4000298FDB /* sunny.png in Resources */,
 				CEBA45672C04CFEE00C95299 /* Assets.xcassets in Resources */,
 				CE1325892C0B5E4000298FDB /* rainy.png in Resources */,
+				CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */,
 				CE13258A2C0B5E4000298FDB /* snow.png in Resources */,
 				CE1325882C0B5E4000298FDB /* cloudy.png in Resources */,
 				CE13258D2C0B5E4000298FDB /* unknown.png in Resources */,
@@ -361,6 +361,7 @@
 				INFOPLIST_FILE = WeatherWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WeatherWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "to get wheather information";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -388,6 +389,7 @@
 				INFOPLIST_FILE = WeatherWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WeatherWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "to get wheather information";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,7 +536,7 @@
 				DEVELOPMENT_TEAM = JP6MC7F82A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wheather/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "天気予報の取得のために位置情報が必要になります";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "please allow access to get wheather";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -565,7 +567,7 @@
 				DEVELOPMENT_TEAM = JP6MC7F82A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wheather/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "天気予報の取得のために位置情報が必要になります";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "please allow access to get wheather";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
