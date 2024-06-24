@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   PrivacyInfo.xcprivacy
+   remembrella
+
+   Created by 柘植俊之介 on 2024/06/25.
+   Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
+-->
+<plist version="1.0">
+<dict>
+    <key>Privacy - Location Usage Description</key>
+    <string>アプリの機能向上のために位置情報を使用します。</string>
+    <key>Privacy - Camera Usage Description</key>
+    <string>カメラを使用して写真を撮影します。</string>
+    <key>Privacy - Contacts Usage Description</key>
+    <string>連絡先を使用して推奨事項を共有します。</string>
+</dict>
+</plist>

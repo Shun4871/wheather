@@ -23,6 +23,8 @@
 		CE1325FF2C0C757700298FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1325FE2C0C757700298FDB /* Assets.xcassets */; };
 		CE1326032C0C757700298FDB /* WeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1325F22C0C757400298FDB /* WeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */; };
+		CE13260C2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */; };
+		CE13260D2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */; };
 		CEBA455E2C04CFED00C95299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455D2C04CFED00C95299 /* AppDelegate.swift */; };
 		CEBA45602C04CFED00C95299 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */; };
 		CEBA45622C04CFED00C95299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA45612C04CFED00C95299 /* ViewController.swift */; };
@@ -80,6 +82,7 @@
 		CE1325FE2C0C757700298FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1326002C0C757700298FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CEBA455D2C04CFED00C95299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CEBA45612C04CFED00C95299 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 				CEBA45662C04CFEE00C95299 /* Assets.xcassets */,
 				CEBA45682C04CFEE00C95299 /* LaunchScreen.storyboard */,
 				CEBA456B2C04CFEE00C95299 /* Info.plist */,
+				CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */,
 				CEBA45732C081CBC00C95299 /* 2kyou_no_tenkiTableViewController.swift */,
 				CEBA45792C0886C300C95299 /* 1WeatherViewController.swift */,
 				CEBA45752C08856500C95299 /* 3konngetu_no_tenkiViewController.swift */,
@@ -268,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE13260D2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */,
 				CE1325FF2C0C757700298FDB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +287,7 @@
 				CEBA45672C04CFEE00C95299 /* Assets.xcassets in Resources */,
 				CE1325892C0B5E4000298FDB /* rainy.png in Resources */,
 				CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */,
+				CE13260C2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */,
 				CE13258A2C0B5E4000298FDB /* snow.png in Resources */,
 				CE1325882C0B5E4000298FDB /* cloudy.png in Resources */,
 				CE13258D2C0B5E4000298FDB /* unknown.png in Resources */,
