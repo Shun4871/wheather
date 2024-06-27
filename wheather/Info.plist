@@ -60,11 +60,17 @@
             </array>
         </dict>
     </dict>
-    <!-- 以下のいずれかのキーを追加 -->
     <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/> <!-- 推奨 -->
-    <!-- または -->
+    <true/>
     <key>UISupportsDocumentBrowser</key>
     <true/>
+
+    <!-- 位置情報の権限リクエストメッセージ -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>このアプリは天気情報を提供するために位置情報を使用します。</string>
+
+    <!-- カメラの権限リクエストメッセージ -->
+    <key>NSCameraUsageDescription</key>
+    <string>このアプリはカメラを使用してユーザーのプロフィール写真を撮影します。</string>
 </dict>
 </plist>

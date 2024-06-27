@@ -22,7 +22,6 @@
 		CE1325FD2C0C757400298FDB /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1325FC2C0C757400298FDB /* AppIntent.swift */; };
 		CE1325FF2C0C757700298FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1325FE2C0C757700298FDB /* Assets.xcassets */; };
 		CE1326032C0C757700298FDB /* WeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1325F22C0C757400298FDB /* WeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */; };
 		CE13260C2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */; };
 		CE13260D2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */; };
 		CEBA455E2C04CFED00C95299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA455D2C04CFED00C95299 /* AppDelegate.swift */; };
@@ -81,7 +80,6 @@
 		CE1325FC2C0C757400298FDB /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		CE1325FE2C0C757700298FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1326002C0C757700298FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CE13260B2C2A141300298FDB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CEBA455D2C04CFED00C95299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBA455F2C04CFED00C95299 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				CE1325F82C0C757400298FDB /* WeatherWidgetLiveActivity.swift */,
 				CE1325FE2C0C757700298FDB /* Assets.xcassets */,
 				CE1326002C0C757700298FDB /* Info.plist */,
-				CE1326072C1B7FB700298FDB /* PrivacyInfo.xcprivacy */,
 			);
 			path = WeatherWidget;
 			sourceTree = "<group>";
@@ -286,7 +283,6 @@
 				CE13258B2C0B5E4000298FDB /* sunny.png in Resources */,
 				CEBA45672C04CFEE00C95299 /* Assets.xcassets in Resources */,
 				CE1325892C0B5E4000298FDB /* rainy.png in Resources */,
-				CE1326082C1B7FB700298FDB /* PrivacyInfo.xcprivacy in Resources */,
 				CE13260C2C2A141300298FDB /* PrivacyInfo.xcprivacy in Resources */,
 				CE13258A2C0B5E4000298FDB /* snow.png in Resources */,
 				CE1325882C0B5E4000298FDB /* cloudy.png in Resources */,
