@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .blue
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true  // ジェスチャーを有効にする
         return label
     }()
 
@@ -97,12 +98,11 @@ class ViewController: UIViewController {
         // Apple Weather商標のラベルの制約を設定
         NSLayoutConstraint.activate([
             attributionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            attributionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
+            attributionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40)
         ])
         
         // 法的ソースリンクのラベルにタップジェスチャーを追加
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openLegalAttribution))
-        attributionLinkLabel.isUserInteractionEnabled = true
         attributionLinkLabel.addGestureRecognizer(tapGesture)
         
         // 法的ソースリンクのラベルの制約を設定

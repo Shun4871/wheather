@@ -11,6 +11,7 @@ import UIKit
 
 final class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
+    // 既存のプロパティ
     @IBOutlet var characterImageView: UIImageView!
     @IBOutlet var temperature: UILabel!
     @IBOutlet var place: UILabel!
@@ -23,11 +24,31 @@ final class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     let service = WeatherService()
     let geocoder = CLGeocoder()
+
+    // Apple Weatherの商標と法的ソースリンクを表示するためのラベル
+    let attributionLabel: UILabel = {
+        let label = UILabel()
+        label.text = " Weather"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let attributionLinkLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Apple Weather Legal Attribution"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .blue
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserlocation()
         setupBackgroundColor()
+        setupAttributionLabels()  // 商標と法的ソースリンクのラベルを設定
     }
     
     func setupBackgroundColor() {
@@ -66,7 +87,6 @@ final class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
-    
     
     func geocodeLocation(_ location: CLLocation) {
         let locale = Locale(identifier: "ja_JP")
@@ -135,5 +155,35 @@ final class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         }
         locationManager.stopUpdatingLocation()
         getWeather(location: location)
+    }
+    
+    /**
+     Apple Weatherの商標と法的ソースリンクを設定する関数
+     */
+    func setupAttributionLabels() {
+        view.addSubview(attributionLabel)
+        view.addSubview(attributionLinkLabel)
+        
+        // Apple Weather商標のラベルの制約を設定
+        NSLayoutConstraint.activate([
+            attributionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            attributionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40)
+        ])
+        
+        // 法的ソースリンクのラベルにタップジェスチャーを追加
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openLegalAttribution))
+        attributionLinkLabel.addGestureRecognizer(tapGesture)
+        
+        // 法的ソースリンクのラベルの制約を設定
+        NSLayoutConstraint.activate([
+            attributionLinkLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            attributionLinkLabel.topAnchor.constraint(equalTo: attributionLabel.bottomAnchor, constant: 8)
+        ])
+    }
+    
+    @objc func openLegalAttribution() {
+        if let url = URL(string: "https://weatherkit.apple.com/legal-attribution.html") {
+            UIApplication.shared.open(url)
+        }
     }
 }
